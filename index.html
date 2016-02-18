@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script src="libs/angular.min.js"></script>
+ <script type="text/javascript" src="http://static.fusioncharts.com/code/latest/fusioncharts.js"></script>
+        <script type="text/javascript" src="http://static.fusioncharts.com/code/latest/themes/fusioncharts.theme.ocean.js"></script>
+        <script type="text/javascript" src="controller/theme/myTheme.js"></script>
+<script src="libs/angular-fusioncharts.min.js"></script>
+<script src="controller/app.js"></script>
+<title>Management Console</title>
+</head>
+<body ng-app="myApp" style="border: 2px solid #E75D5C; padding: 5px;">
+	<div style="border: 2px solid #000000; padding: 5px;" ng-controller="ngRepeatCtrl" >
+	<br/>
+			Non-Repetitive Elements with indexing
+			<div ng-repeat="n in [421, 42, 431, 43]">{{$index+1}}. {{n}}</div>
+			<hr/>
+			Repetitive Elements (donot display anything)
+			<div ng-repeat="n in [42, 42, 43, 43]">{{$index+1}}. {{n}}</div>
+			<br/><hr/>
+			Repetitive Elements (display with track by $index)
+			<br/>
+			<div ng-repeat="n in [42, 42, 43, 43] track by $index">{{$index+1}}. {{n}}</div>
+			<br/><hr/>
+			Repetitive Elements (display with custom function track by)
+			<div ng-repeat="n in [42, 42, 43, 43] track by myFun($index)">{{$index+1}}. {{n}}</div>
+			<br/>
+			<br/><hr/>
+			Repetitive Collection (display with custom function track by id)
+			<div ng-repeat="n in collection track by n.id">
+					{{$index+1}}. {{n.id}}+   {{n.name}}  +  {{n.age}}  +  {{n.salary}}<br/>
+			</div>
+			<br/>
+			<br/><hr/>
+			Repetitive Collection (display with custom function track by custom)
+			<div ng-repeat="n in collection track by myFunCollection(n)">{{$index+1}}. {{n}}</div>
+			<br/>
+	</div>
+	<h2>
+		Parent Controller
+		<h2 />
+		<div ng-controller="ParentCtrl" class="ng-scope">
+			<input type='text' ng-model="parentmessage" />
+			<button ng-click="handleClick(parentmessage);">BroadCast</button>
+			<br /> name = {{name}} <br> Post = {{post}} <br> <br>
+			<br> <br>
+			<div style="border: 2px solid #428bca; padding: 5px;">
+				<h2>Client Controller</h2>
+				<div ng-controller="SiblingOneCtrl"
+					style="border: 2px solid #deddff; padding: 5px;">
+					<input type='text' ng-model="sib1name" />
+					<button ng-click="handleClick1(sib1name);">Emit</button>
+					<br /> broadcasted from parent : {{message}}
+				</div>
+				<br />
+				<div ng-controller="SiblingTwoCtrl"
+					style="border: 2px solid #efeddd; padding: 5px;">
+					<input type='text' ng-model="sib1post" />
+					<button ng-click="handleClick2(sib1post);">Emit</button>
+					<br /> broadcasted from parent : {{message}}
+				</div>
+			</div>
+			<div>
+				File Menu <input type="file" id="file" name="file" required="">
+			</div>
+		</div>
+
+		<hr />
+		<div ng-controller="myController"
+			style="border: 2px solid #df8bca; padding: 5px;">
+			<input type="input" ng-model="title" /> <br /> <span> {{st}}</span>
+			<p class="jm-find" title1="title" title2="{{title}}" title3="staticdsf"
+				title4="changePt()"></p>
+		</div>
+
+
+		<hr />
+		<div ng-controller="Ctrl1"
+			style="border: 2px solid #eeeda; padding: 5px;">
+			<h2 ng-click="reverseName()">Hey {{name}}, Click me to reverse
+				your name</h2>
+			<div my-directive></div>
+			<hr />
+			<div my-directive-scope></div>
+			<hr />
+			<div my-directive-isolated-scope></div>
+			<hr />
+			<div style="border: 2px solid #eeeeff; padding: 5px;">
+				<div>
+					Name inside parent scope is: <strong>{{name}}</strong> <input
+						type="button" ng-click="reverseName()" value="Reverse name" />
+				</div>
+				<div class="line">
+					Color inside parent scope is: <strong style="color: {{color">{{color|uppercase}}</strong>
+					<input type="button" ng-click="randomColor()"
+						value="Randomize color" />
+				</div>
+				<div class="directive" my-directive-all-scope name="{{name}}"
+					color="color" reverse="reverseName()"></div>
+			</div>
+		</div>
+
+<br/>
+		<div ng-controller="AppCtrl" style="border: 2px solid #eeeda; padding: 5px;">
+			<div phone dial="callHome('called home some time back.!')" ></div>
+		</div>
+		
+		<div ng-controller="ngShowCtrl">
+			<input type="number" ng-model="time" >
+			<small >{{time}} </small>
+			<div ng-show="time>=1">
+			<small  value="minutes">minutes</small>
+			</div>	
+			<div>
+				<input type="button" ng-click="startInterval()"
+						value="start updating value after 20 sec." />
+					Updated Value: {{value}}		
+						<br/>
+				<input type="button" ng-click="startTimeout()"
+						value="Send message after 20 sec." />
+			</div>			
+		</div>
+<br/>		
+		<hr />
+		<div>
+		<h3>Directive with Transclude </h3> 
+		<br/>
+		 <welcome>
+    		<button>Click this button</button>
+    		<input type="text"></input>
+  		</welcome>
+  		<br/>
+  		<h3>Directive with Transclude </h3> 
+  		<welcomewithTransclude>
+    		<button>Click this button</button>
+    		<input type="text"></input>
+  		</welcomewithTransclude>>
+  		</div>
+<br/>
+  		<hr />
+		<div ng-controller="fusionChartController">
+		<h3>Fusion Charts </h3> 
+		<br/>
+		<fusioncharts     width="600"   height="400"   type="column2d" datasource="{{myDataSource}}">
+		</fusioncharts>
+		</div>
+</body>
+</html>
